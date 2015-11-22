@@ -14,7 +14,7 @@ def get_pos_neg_score(s1):
 	sid = SIA()
 	p = sid.polarity_scores(str(s1))
 	if  p['compound'] == 0:
-		senti_score = 1 - 0.1
+		senti_score = 1 - 0.02
 	else:
 		senti_score = 1 - (0.5 + p['compound']/2)
 	max_score = 0.0
@@ -22,38 +22,26 @@ def get_pos_neg_score(s1):
 		p = sid.polarity_scores(str(sentence))
 		if abs(p['compound']) > abs(max_score):
 			max_score = p['compound']
-	#pdb.set_trace()
 	return [senti_score, 1 - (0.5 + max_score/2)]
 
 reload(sys)
 sys.setdefaultencoding('utf')
 f = open('../Data/data.txt','rb')
-parts = []
-doc_id = []
-rating = []
-staff = []
-punctuality = []
-help = []
-knowledge = []
-review = []
-#pos = []
-#neg = []
-score = []
-max_score = []
-line = f.readline()
+doc_id, rating, staff = [], [], []
+punctuality, help, knowledge = [], [], []
+review, score, max_score = [], [], []
 tup_list = []
+line = f.readline()
 count = 0
 while line != '':
-	#pdb.set_trace()
 	parts = line.split('|')
 	if len(parts[7]) > 1:
 		try:
 			x = get_pos_neg_score(parts[7])
 		except UnicodeDecodeError:
-			#print "Error occured at line :",line
+			print "Error occured at line :",line
 			line = f.readline()
 			continue
-		#print x
 		doc_id.append(parts[0])
 		rating.append(float(parts[1]))
 		staff.append(float(parts[2]))
@@ -61,13 +49,10 @@ while line != '':
 		help.append(float(parts[4]))
 		knowledge.append(float(parts[5]))
 		review.append(parts[7])
-		#pdb.set_trace()
-		#pos.append(x)
-		#neg.append(y)
 		score.append(x[0])
 		max_score.append(x[1])
-		tup_list.append((str(parts[0]), float(parts[1]), float(parts[2]), float(parts[3]), float(parts[4]), float(parts[5]), x[0], x[1]))
-		#pdb.set_trace()
+		tup_list.append((str(parts[0]), float(parts[1]), float(parts[2]),
+	 		float(parts[3]), float(parts[4]), float(parts[5]), x[0], x[1]))
 	line = f.readline()
 	count+=1
 	if count%1 == 0:
@@ -83,8 +68,6 @@ df = pd.DataFrame({
 					'help' : help,
 					'knowledge' : knowledge,
 					'review' : review,
-					#'positive_score' : pos,
-					#'negative_score' : neg,
 					'sentiment_score' : score,
 					'max_score' : max_score
 				 })

@@ -28,16 +28,16 @@ sentiment_score = data.sentiment_score.tolist()
 max_score = data.max_score.tolist()
 
 for i in range(len(ids)):
-	mat[x+0,i] = 1.0/help[i] if help[i] != 0.0 else 1.0*sys.maxint
-	mat[i,x+0] = 1.0/help[i] if help[i] != 0.0 else 1.0*sys.maxint
-	mat[x+1,i] = 1.0/knowledge[i] if knowledge[i] != 0.0 else 1.0*sys.maxint
-	mat[i,x+1] = 1.0/knowledge[i] if knowledge[i] != 0.0 else 1.0*sys.maxint
-	mat[x+2,i] = 1.0/punctuality[i] if punctuality[i] != 0.0 else 1.0*sys.maxint
-	mat[i,x+2] = 1.0/punctuality[i] if punctuality[i] != 0.0 else 1.0*sys.maxint
-	mat[x+3,i] = 1.0/staff[i] if staff[i] != 0.0 else 1.0*sys.maxint
-	mat[i,x+3] = 1.0/staff[i] if staff[i] != 0.0 else 1.0*sys.maxint
-	mat[x+4,i] = 1.0/rating[i] if rating[i] != 0.0 else 1.0*sys.maxint
-	mat[i,x+4] = 1.0/rating[i] if rating[i] != 0.0 else 1.0*sys.maxint
+	mat[x+0,i] = 1.0/help[i] if help[i] != 0.0 else 100.0
+	mat[i,x+0] = 1.0/help[i] if help[i] != 0.0 else 100.0
+	mat[x+1,i] = 1.0/knowledge[i] if knowledge[i] != 0.0 else 100.0
+	mat[i,x+1] = 1.0/knowledge[i] if knowledge[i] != 0.0 else 100.0
+	mat[x+2,i] = 1.0/punctuality[i] if punctuality[i] != 0.0 else 100.0
+	mat[i,x+2] = 1.0/punctuality[i] if punctuality[i] != 0.0 else 100.0
+	mat[x+3,i] = 1.0/staff[i] if staff[i] != 0.0 else 100.0
+	mat[i,x+3] = 1.0/staff[i] if staff[i] != 0.0 else 100.0
+	mat[x+4,i] = 1.0/rating[i] if rating[i] != 0.0 else 100.0
+	mat[i,x+4] = 1.0/rating[i] if rating[i] != 0.0 else 100.0
 	mat[x+5,i] = sentiment_score[i]
 	mat[i,x+5] = sentiment_score[i]
 	mat[x+6,i] = 0.0 #max_score[i]
@@ -51,6 +51,9 @@ for i in range(len(ids)):
 #vals = [2.50437477e+10,   2.99813869e+01,   7.83729703e+00,
 #   	    6.19982401e+00,   3.80212724e+00,   2.08235716e+00]
 vals = [1.0,1.0,1.0,1.0,1.0,1.0,1.0]
+#vals =  [2.50437477e+10,   2.99813869e+01,   7.83729703e+00,
+#         6.19982401e+00,   3.80212724e+00,   2.08235716e+00,
+#         0.00000000e+00]
 sv = sum(vals)
 for i in range(0,7):
 	mat[n-1,x+i] = vals[i]/sv

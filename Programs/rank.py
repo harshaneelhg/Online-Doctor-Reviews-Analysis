@@ -9,9 +9,6 @@ import scipy.stats
 import matplotlib.pyplot as plt
 import pdb
 
-#========================================== FUNCTION DEFINITIONS ==========================================
-#==========================================================================================================
-
 def get_ranks_rwr(q, c, W):
 	"""
 		Input:
@@ -28,7 +25,6 @@ def get_ranks_rwr(q, c, W):
 	"""
 
 	#Column Normalize Adjecency Matrix.
-
 	W = normalize(W, norm='l1', axis=0)
 
 	#Basic Random Walk with Restarts Algorithm.
@@ -36,12 +32,12 @@ def get_ranks_rwr(q, c, W):
 	r1 = (1-c)*(r*W) + c*q
 	i=0
 
+	# Iterations of Random Walk Algorithm.
 	while (r1-r).dot((r1-r).T) > 1e-5:
 		r = r1
 		r1 = (1-c)*(r*W) + c*q
 		i= i+1
 
-	#print 'Reached to the convergence in %s iterations.'%i
 	return r1
 
 def main_func(c,key_ord):
@@ -51,8 +47,10 @@ def main_func(c,key_ord):
 	x = data['n_reviews']
 
 	tup_list = scipy.io.loadmat('../Data/rating_list.mat')['rating_list'].tolist()
-	tup_list = [[float(t[i]) if i>0 else t[i] for i in range(len(t))] for t in tup_list]
-	#pdb.set_trace()
+	tup_list = [
+				[float(t[i]) if i>0 else t[i] for i in range(len(t))]
+				for t in tup_list
+			   ]
 
 	with open('../Data/groups.json','rb') as infile:
 		groups = json.load(infile)
@@ -114,19 +112,7 @@ def main_func(c,key_ord):
 
 	ret = 1 - ((6.0*d_2)/(n_ranks*(n_ranks**2-1)))
 
-
-	#pdb.set_trace()
-	#ret = scipy.stats.spearmanr(r1,r2)
-	#print ret
 	return ret
-	#pdb.set_trace()
-	#print "Top 20 doctors:"
-	#print sorted_ranks[:20]
-	#print ""
-	#print "Bottom 20 doctors:"
-	#print sorted_ranks[150:]
-
-#main_func(0.19)
 
 """
 for a1 in range(0,5):
@@ -166,14 +152,9 @@ for c in range(0,101):
 	y.append(cor)
 	#p.append(cor[1])
 plt.plot(x,y,'b-')
+plt.xlabel('Restart probability')
+plt.ylabel("Spearman's ranking correlation coefficient")
+plt.title('Performence of Random Walk with Restarts algorithm')
 plt.grid()
 plt.show()
 print max(y)
-#fig, ax1 = plt.subplots()
-#ax1.plot(x,y,'b-')
-#ax1.set_xlabel('Restart probabilities')
-#ax1.set_ylabel('Rank correlation coefficient', color='b')
-
-#ax2 = ax1.twinx()
-#ax2.plot(x,p,'r-')
-#ax2.set_ylabel('p-value', color = 'r')
