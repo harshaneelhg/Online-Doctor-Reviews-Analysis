@@ -43,7 +43,6 @@ punctuality = data.punctuality.tolist()
 staff = data.staff.tolist()
 rating = data.rating.tolist()
 sentiment_score = data.sentiment_score.tolist()
-max_score = data.max_score.tolist()
 
 for i in range(len(ids)):
 	mat[x+0,i] = 1.0/help[i] if help[i] != 0.0 else sys.maxint
@@ -58,22 +57,22 @@ for i in range(len(ids)):
 	mat[i,x+4] = 1.0/rating[i] if rating[i] != 0.0 else sys.maxint
 	mat[x+5,i] = sentiment_score[i]
 	mat[i,x+5] = sentiment_score[i]
-	mat[x+6,i] = 0.0 #max_score[i]
-	mat[i,x+6] = 0.0 #max_score[i]
-	mat[x+7,i] = 0.02
-	mat[i,x+7] = 0.02
+	mat[x+6,i] = 0.02
+	mat[i,x+6] = 0.02
 	groups[str(ids[i])].append(i)
 
 f_mat = mat[n-y+1:n,0:x]
 vals = []
-for i in range(8):
+pdb.set_trace()
+
+for i in range(7):
 	arr = np.array(f_mat[i].todense()).flatten(-1).tolist()
 	vals.append(get_entropy(arr))
-vals = vals[::-1]
+print "Entropies:", vals
 sv = sum(vals)
-for i in range(0,8):
-	mat[n-1,x+i] = vals[i]/sv
-	mat[x+i,n-1] = vals[i]/sv
+for i in range(7):
+	mat[n-1,x+i] = sv*1.0/vals[i] if vals[i] != 0.0 else 100.0
+	mat[x+i,n-1] = sv*1.0/vals[i] if vals[i] != 0.0 else 100.0
 
 scipy.io.savemat('../Data/graph.mat', {'mat': mat, 'n': n, 'n_reviews':x})
 with open('../Data/groups.json', 'wb') as outfile:

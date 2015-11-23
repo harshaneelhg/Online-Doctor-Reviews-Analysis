@@ -17,19 +17,14 @@ def get_pos_neg_score(s1):
 		senti_score = 1 - 0.02
 	else:
 		senti_score = 1 - (0.5 + p['compound']/2)
-	max_score = 0.0
-	for sentence in blob.sentences:
-		p = sid.polarity_scores(str(sentence))
-		if abs(p['compound']) > abs(max_score):
-			max_score = p['compound']
-	return [senti_score, 1 - (0.5 + max_score/2)]
+	return [senti_score]
 
 reload(sys)
 sys.setdefaultencoding('utf')
 f = open('../Data/data.txt','rb')
 doc_id, rating, staff = [], [], []
 punctuality, help, knowledge = [], [], []
-review, score, max_score = [], [], []
+review, score= [], []
 tup_list = []
 line = f.readline()
 count = 0
@@ -50,9 +45,8 @@ while line != '':
 		knowledge.append(float(parts[5]))
 		review.append(parts[7])
 		score.append(x[0])
-		max_score.append(x[1])
 		tup_list.append((str(parts[0]), float(parts[1]), float(parts[2]),
-	 		float(parts[3]), float(parts[4]), float(parts[5]), x[0], x[1]))
+	 		float(parts[3]), float(parts[4]), float(parts[5]), x[0]))
 	line = f.readline()
 	count+=1
 	if count%1 == 0:
@@ -69,7 +63,6 @@ df = pd.DataFrame({
 					'knowledge' : knowledge,
 					'review' : review,
 					'sentiment_score' : score,
-					'max_score' : max_score
 				 })
 df.to_csv('../Data/data_sentiment.csv', index = False)
 scipy.io.savemat('../Data/rating_list.mat', {'rating_list': tup_list})
