@@ -40,7 +40,7 @@ def get_ranks_rwr(q, c, W):
 
 	return r1
 
-def main_func(c,key_ord):
+def compute_rank_correlation(c,key_ord):
 	data = scipy.io.loadmat('../Data/graph.mat')
 	mat = data['mat']
 	n = data['n']
@@ -114,40 +114,13 @@ def main_func(c,key_ord):
 
 	return ret
 
-"""
-for a1 in range(0,5):
-	for a2 in range(0,5):
-		if a2!=a1:
-			for a3 in range(0,5):
-				if a3!= a2 and a3!=a1:
-					for a4 in range(0,5):
-						if a4!=a3 and a4!=a2 and a4!=a1:
-							for a5 in range(0,5):
-								if a5!=a4 and a5!=a3 and a5!=a2 and a5!= a1:
-									x = []
-									y = []
-									p = []
-									key_ord = (a1,a2,a3,a4,a5)
-									for c in range(0,101):
-										i = c*1.0/100
-										cor = main_func(i,key_ord)
-										x.append(i)
-										y.append(cor)
-										#p.append(cor[1])
-
-									#plt.plot(x,y,'b-')
-									#plt.grid()
-									#plt.show()
-									print max(y), (a1,a2,a3,a4,a5)
-print y
-"""
 x = []
 y = []
 p = []
-key_ord = (3, 1, 0, 2, 4)
+key_ord = (4,3,2,1,0)
 for c in range(0,101):
 	i = c*1.0/100
-	cor = main_func(i,key_ord)
+	cor = compute_rank_correlation(i,key_ord)
 	x.append(i)
 	y.append(cor)
 	#p.append(cor[1])
