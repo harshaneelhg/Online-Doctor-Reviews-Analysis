@@ -1,9 +1,12 @@
+#!/usr/bin/python
+# -*- coding: UTF-8 -*-
+
 import numpy as np
 import scipy.sparse
 from sklearn.preprocessing import normalize
 import scipy.io
 import json
-import scipy.stats
+from scipy.stats import *
 import pandas as pd
 import textblob as tb
 import sys
@@ -37,7 +40,6 @@ def get_entropy(arr):
     entropy = 0
     for c in count:
     	entropy += c * math.log(c,2)
-    #pdb.set_trace()
     return -1*entropy
 
 def get_ranks_rwr(q, c, W):
@@ -124,5 +126,7 @@ def compute_rank_correlation(c,key_ord,mat,n,x,tup_list,groups):
     	d_2 += (ranks1[k] - ranks2[k])**2
 
     ret = 1 - ((6.0*d_2)/(n_ranks*(n_ranks**2-1)))
-
-    return ret
+    F = np.arctan(ret)
+    z = (((len(r1)-3)*1.0/1.06)**0.5)*F
+    p_val = scipy.stats.norm.sf(abs(z))*2
+    return ret, p_val
