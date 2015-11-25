@@ -21,7 +21,10 @@ def get_entropy(arr):
         This function finds out the entropy of an array.
 
         Input:
-        arr (type:List)
+        arr (type:List): Array containing data.
+
+        Output:
+        entropy: Entropy of data stored in array.
     """
     if type(arr) != list:
         try:
