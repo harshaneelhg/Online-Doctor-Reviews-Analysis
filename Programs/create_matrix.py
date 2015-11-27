@@ -56,11 +56,11 @@ if __name__ == '__main__':
 		arr = np.array(f_mat[i].todense()).flatten(-1).tolist()
 		vals.append(get_entropy(arr))
 	print "Entropies:", vals
-	vals = [1.0,1.0,1.0,1.0,1.0,1.0,0.0]
+	#vals = [1.0,1.0,1.0,1.0,1.0,1.0,0.0]
 	sv = sum(vals)
 	for i in range(7):
-		mat[n-1,x+i] = vals[i]/sv
-		mat[x+i,n-1] = sv*1.0/vals[i] if vals[i] != 0.0 else 100.0
+		mat[n-1,x+i] = sv*1.0/vals[i] if vals[i] != 0.0 else sys.maxint
+		mat[x+i,n-1] = sv*1.0/vals[i] if vals[i] != 0.0 else sys.maxint
 
 	scipy.io.savemat('../Data/graph.mat', {'mat': mat, 'n': n, 'n_reviews':x})
 	with open('../Data/groups.json', 'wb') as outfile:
