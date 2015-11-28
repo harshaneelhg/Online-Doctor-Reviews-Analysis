@@ -31,14 +31,8 @@ if __name__ == '__main__':
 		a.append(i)
 		b.append(cor)
 		p.append(pval)
-	plt.plot(a,b,'b-',label='Performence of RWR')
-	plt.plot(a,p,'r-',label='Significance value')
-	plt.xlabel('Restart probability')
-	plt.ylabel("Spearman's ranking correlation coefficient")
-	plt.title('Performence of Random Walk with Restarts algorithm')
-	plt.grid()
-	plt.show()
 
+	# Plot results.
 	fig, ax1 = plt.subplots()
 	plt.title('Performance of RWR and the effect of restart probability')
 	ax1.plot(a,b,'b-',label='Performence of RWR')
