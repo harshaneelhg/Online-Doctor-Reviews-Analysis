@@ -74,6 +74,28 @@ def get_ranks_rwr(q, c, W):
 	return r1
 
 def compute_rank_correlation(c,key_ord,mat,n,x,tup_list,groups):
+    """
+        This function computes Spearman's ranking correlation coefficient
+        and the Significance value of ranking. This functions first computes
+        probable ranking using RWR algorithm. To compute the Significance
+        value of ranking results, it first sorts the data using key ordering
+        specified and then finds out the Spearman's ranking correlation
+        coefficient. Significance value(two-sided) is computed using Fischer
+        projection and Z-score.
+
+        Input:
+        c: Restart probability for RWR algorithm.
+        key_ord: Key ordering for raw sorting of original data.
+        mat: Adjecency matrix of the data.
+        n: Size of matrix.
+        x: Number of reviews.
+        tup_list: List of tuples having all the rows as tuples.
+        groups: Dictionary of groups containing rows for individual doctors.
+
+        Output:
+        corr: Spearman's ranking correlation coefficient.
+        p_val: P-value (Significance test) of ranking prediction.
+    """
     q = np.zeros(n,dtype=float)
     q[n-1] = 1.0
     q = scipy.sparse.csc_matrix(q)
@@ -128,8 +150,8 @@ def compute_rank_correlation(c,key_ord,mat,n,x,tup_list,groups):
     for k in r1[:n_ranks]:
     	d_2 += (ranks1[k] - ranks2[k])**2
 
-    ret = 1 - ((6.0*d_2)/(n_ranks*(n_ranks**2-1)))
-    F = np.arctan(ret)
+    corr = 1 - ((6.0*d_2)/(n_ranks*(n_ranks**2-1)))
+    F = np.arctan(corr)
     z = (((len(r1)-3)*1.0/1.06)**0.5)*F
     p_val = scipy.stats.norm.sf(abs(z))*2
-    return ret, p_val
+    return corr, p_val
