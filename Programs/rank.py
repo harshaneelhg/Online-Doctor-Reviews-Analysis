@@ -45,7 +45,7 @@ if __name__ == '__main__':
 	ax2.set_yscale('log')
 	h1, l1 = ax1.get_legend_handles_labels()
 	h2, l2 = ax2.get_legend_handles_labels()
-	ax1.legend(h1+h2, l1+l2, loc=2)
+	ax1.legend(h1+h2, l1+l2)
 	plt.grid()
 	plt.show()
 

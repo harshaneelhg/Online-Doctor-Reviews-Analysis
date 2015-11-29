@@ -64,12 +64,12 @@ def get_ranks_rwr(q, c, W):
 	W = normalize(W, norm='l1', axis=0)
 	#Basic Random Walk with Restarts Algorithm.
 	r = q
-	r1 = (1-c)*(r*W) + c*q
+	r1 = c*(r*W) + (1-c)*q
 	i=0
 	# Iterations of Random Walk Algorithm.
 	while (r1-r).dot((r1-r).T) > 1e-5:
 		r = r1
-		r1 = (1-c)*(r*W) + c*q
+		r1 = c*(r*W) + (1-c)*q
 		i= i+1
 	return r1
 
