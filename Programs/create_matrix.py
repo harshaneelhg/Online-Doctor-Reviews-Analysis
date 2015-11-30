@@ -44,8 +44,8 @@ if __name__ == '__main__':
 		mat[i,x+4] = 1.0/rating[i] if rating[i] != 0.0 else sys.maxint
 		mat[x+5,i] = sentiment_score[i]
 		mat[i,x+5] = sentiment_score[i]
-		mat[x+6,i] = 0.02
-		mat[i,x+6] = 0.02
+		mat[x+6,i] = 1.0
+		mat[i,x+6] = 1.0
 		groups[str(ids[i])].append(i)
 
 	f_mat = mat[n-y+1:n,0:x]

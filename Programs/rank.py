@@ -49,6 +49,6 @@ if __name__ == '__main__':
 	plt.grid()
 	plt.show()
 
-	best_corr = max(b)
+	best_corr = max(abs(np.array(b)))
 	best_c = np.argmax(b)
 	print best_corr, best_c, p[best_c]

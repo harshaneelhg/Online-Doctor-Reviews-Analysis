@@ -67,7 +67,7 @@ def get_ranks_rwr(q, c, W):
 	r1 = c*(r*W) + (1-c)*q
 	i=0
 	# Iterations of Random Walk Algorithm.
-	while (r1-r).dot((r1-r).T) > 1e-5:
+	while (r1-r).dot((r1-r).T) > 1e-6:
 		r = r1
 		r1 = c*(r*W) + (1-c)*q
 		i= i+1
