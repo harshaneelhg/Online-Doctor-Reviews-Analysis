@@ -49,13 +49,11 @@ if __name__ == '__main__':
 		groups[str(ids[i])].append(i)
 
 	f_mat = mat[n-y+1:n,0:x]
-	pdb.set_trace()
 	vals = []
-
 	for i in range(7):
 		arr = np.array(f_mat[i].todense()).flatten(-1).tolist()
 		vals.append(get_entropy(arr))
-	print "Entropies:", vals
+	#print "Entropies:", vals
 	sv = sum(vals)
 	for i in range(7):
 		mat[n-1,x+i] = sv*1.0/vals[i] if vals[i] != 0.0 else sys.maxint
