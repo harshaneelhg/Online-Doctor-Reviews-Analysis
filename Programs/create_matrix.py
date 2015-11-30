@@ -7,7 +7,6 @@ import scipy.sparse
 import scipy.io
 import json
 import sys
-import pdb
 from modules import get_entropy
 
 if __name__ == '__main__':

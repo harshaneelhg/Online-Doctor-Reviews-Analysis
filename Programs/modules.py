@@ -12,7 +12,6 @@ import textblob as tb
 import sys
 from nltk.sentiment.vader import SentimentIntensityAnalyzer as SIA
 import math
-import pdb
 
 __all__ = ['get_entropy','get_ranks_rwr', 'compute_rank_correlation']
 

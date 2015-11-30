@@ -51,4 +51,6 @@ if __name__ == '__main__':
 
 	best_corr = max(abs(np.array(b)))
 	best_c = np.argmax(b)
-	print best_corr, best_c, p[best_c]
+	print 'Best correlation value: %f'%best_corr
+	print 'Best restart probability: %f'%a[best_c]
+	print 'Best p-value: %s'%str(p[best_c])
