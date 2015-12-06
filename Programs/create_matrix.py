@@ -31,20 +31,20 @@ if __name__ == '__main__':
 	sentiment_score = data.sentiment_score.tolist()
 
 	for i in range(len(ids)):
-		mat[x+0,i] = (1.0 - 5.0/help[i]) if help[i] != 0.0 else 1.0
-		mat[i,x+0] = (1.0 - 5.0/help[i]) if help[i] != 0.0 else 1.0
-		mat[x+1,i] = (1.0 - 5.0/knowledge[i]) if knowledge[i] != 0.0 else 1.0
-		mat[i,x+1] = (1.0 - 5.0/knowledge[i]) if knowledge[i] != 0.0 else 1.0
-		mat[x+2,i] = (1.0 - 5.0/punctuality[i]) if punctuality[i] != 0.0 else 1.0
-		mat[i,x+2] = (1.0 - 5.0/punctuality[i]) if punctuality[i] != 0.0 else 1.0
-		mat[x+3,i] = (1.0 - 5.0/staff[i]) if staff[i] != 0.0 else 1.0
-		mat[i,x+3] = (1.0 - 5.0/staff[i]) if staff[i] != 0.0 else 1.0
-		mat[x+4,i] = (1.0 - 5.0/rating[i]) if rating[i] != 0.0 else 1.0
-		mat[i,x+4] = (1.0 - 5.0/rating[i]) if rating[i] != 0.0 else 1.0
+		mat[x+0,i] = help[i]
+		mat[i,x+0] = help[i]
+		mat[x+1,i] = knowledge[i]
+		mat[i,x+1] = knowledge[i]
+		mat[x+2,i] = punctuality[i]
+		mat[i,x+2] = punctuality[i]
+		mat[x+3,i] = staff[i]
+		mat[i,x+3] = staff[i]
+		mat[x+4,i] = rating[i]
+		mat[i,x+4] = rating[i]
 		mat[x+5,i] = sentiment_score[i]
 		mat[i,x+5] = sentiment_score[i]
-		mat[x+6,i] = 1.0
-		mat[i,x+6] = 1.0
+		mat[x+6,i] = 0.1
+		mat[i,x+6] = 0.1
 		groups[str(ids[i])].append(i)
 
 	f_mat = mat[n-y+1:n,0:x]
@@ -55,8 +55,8 @@ if __name__ == '__main__':
 	#print "Entropies:", vals
 	sv = sum(vals)
 	for i in range(7):
-		mat[n-1,x+i] = (1.0 - sv*1.0/vals[i]) if vals[i] != 0.0 else 1.0
-		mat[x+i,n-1] = (1.0 - sv*1.0/vals[i]) if vals[i] != 0.0 else 1.0
+		mat[n-1,x+i] = vals[i]
+		mat[x+i,n-1] = vals[i]
 
 	scipy.io.savemat('../Data/graph.mat', {'mat': mat, 'n': n, 'n_reviews':x})
 	with open('../Data/groups.json', 'wb') as outfile:
