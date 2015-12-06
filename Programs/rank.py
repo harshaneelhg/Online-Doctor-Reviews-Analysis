@@ -31,7 +31,7 @@ if __name__ == '__main__':
 		a.append(i)
 		b.append(cor)
 		p.append(pval)
-
+	b=np.abs(np.array(b)).tolist()
 	# Plot results.
 	fig, ax1 = plt.subplots()
 	plt.title('Performance of RWR and the effect of restart probability')
